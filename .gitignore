@@ -117,3 +117,6 @@ dmypy.json
 # Visual Studio Code
 .vscode/
 
+# Time tracking (for local development)
+time_entries/
+

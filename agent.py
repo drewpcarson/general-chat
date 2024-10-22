@@ -6,8 +6,8 @@ import anthropic
 dotenv.load_dotenv()
 
 class ChatAPIProvider():
-    def __init__(self, url: str, model: str, api_key: str, client: OpenAI | anthropic.Anthropic):
-        self.url = url
+    def __init__(self, base_url: str, model: str, api_key: str, client: OpenAI | anthropic.Anthropic):
+        self.base_url = base_url
         self.model = model
         self.api_key = api_key
         self.client = client
@@ -25,7 +25,7 @@ class ChatAPIProvider():
                 ],
                 max_tokens=max_tokens
             )
-            return response.choices[0].message.content
+            return response
         else:
             response = self.chat_complete(
                 model=self.model,
@@ -102,6 +102,7 @@ class Agent:
         response = self._provider.chat(
             user_input,
             self._system_prompt,
-            max_tokens=self._max_tokens
+            max_tokens=self._max_tokens,
+            tools=self._tools
         )
         return response
